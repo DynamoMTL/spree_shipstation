@@ -22,4 +22,8 @@ describe Spree::ShipStationController do
     specify { response.should be_success }
     specify { response.body.should =~ /success/ }
   end
+
+  it "doesnt know unknown" do
+    expect { get :unknown, use_route: :spree }.to raise_error(AbstractController::ActionNotFound)
+  end
 end
