@@ -12,6 +12,11 @@ module SpreeShipstation
     end
 
     def self.activate
+      Spree::AppConfiguration.class_eval do
+        preference :shipstation_username, :string
+        preference :shipstation_password, :string
+      end
+
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end

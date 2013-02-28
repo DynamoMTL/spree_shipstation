@@ -65,8 +65,15 @@ describe Spree::ShipstationController do
   end
 
   def login
-    user = 'mario'
-    pw   = 'lemieux'
+    config(username: "mario", password: 'lemieux')
+
+    user, pw = 'mario', 'lemieux'
     request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user,pw)
+  end
+
+  def config(options = {})
+    options.each do |k, v|
+      Spree::Config.send("shipstation_#{k}=", v)
+    end
   end
 end
