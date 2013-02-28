@@ -8,8 +8,8 @@ describe Spree::ShipstationController do
 
   context "export" do
     before do
-      Spree::Shipment.stub_chain(:exportable, :between).with(Time.new(2013, 12, 31,  8, 0, 0), 
-                                                             Time.new(2014,  1, 13, 23, 0, 0))
+      Spree::Shipment.stub_chain(:exportable, :between).with(Time.new(2013, 12, 31,  8, 0, 0, "+00:00"),
+                                                             Time.new(2014,  1, 13, 23, 0, 0, "+00:00"))
                                                        .and_return(:some_shipments)
 
       get :export, start_date: '12/31/2013 8:00', end_date: '1/13/2014 23:00', use_route: :spree
