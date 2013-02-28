@@ -1,3 +1,3 @@
 Spree::Core::Engine.routes.draw do
-  get '/ship_station' => MapQueryStringApp
+  get '/shipstation' => MapQueryStringApp
 end

@@ -1,8 +1,8 @@
-module SpreeShipStation
+module SpreeShipstation
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree
-    engine_name 'spree_ship_station'
+    engine_name 'spree_shipstation'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
