@@ -1,3 +1,5 @@
+include SpreeShipstation
+
 module Spree
   class ShipstationController < Spree::StoreController
     ssl_required
@@ -11,7 +13,14 @@ module Spree
     end
 
     def shipnotify
-      render text: 'success'
+      if Tracking.apply(params[:order_number],
+                        params[:carrier],
+                        params[:service],
+                        params[:tracking_number])
+        render text: 'success'
+      else
+        render text: 'failed', status: :bad_request
+      end
     end
 
   private

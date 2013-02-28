@@ -20,12 +20,32 @@ describe Spree::ShipstationController do
   end
 
   context "shipnotify" do
-    before do
-      get :shipnotify, use_route: :spree
+    context "shipment found" do
+      before do
+        SpreeShipstation::Tracking.should_receive(:apply).with('S12345', 'UPS', 'Next Day', '1Z123123123123').and_return(true)
+
+        get :shipnotify, order_number:    'S12345',
+                         carrier:         'UPS',
+                         service:         'Next Day',
+                         tracking_number: '1Z123123123123',
+                         use_route: :spree
+      end
+
+      specify { response.should be_success }
+      specify { response.body.should =~ /success/ }
     end
 
-    specify { response.should be_success }
-    specify { response.body.should =~ /success/ }
+    context "shipment not found" do
+      before do
+        SpreeShipstation::Tracking.should_receive(:apply)
+                                  .and_return(false)
+
+        get :shipnotify, use_route: :spree
+      end
+
+      specify { response.code.should == '400' }
+      specify { response.body.should =~ /failed/ }
+    end
   end
 
   it "doesnt know unknown" do
