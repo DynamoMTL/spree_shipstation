@@ -1,5 +1,7 @@
 module Spree
   class ShipStationController < Spree::StoreController
+    ssl_required
+
     def export
     end
 
