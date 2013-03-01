@@ -25,9 +25,9 @@ xml.Orders {
     xml.Order {
       xml.OrderID        shipment.id
       xml.OrderNumber    shipment.number
-      xml.OrderDate      order.completed_at.to_s(date_format)
+      xml.OrderDate      order.completed_at.strftime(date_format)
       xml.OrderStatus    shipment.state
-      xml.LastModified   shipment.updated_at.to_s(date_format)
+      xml.LastModified   shipment.updated_at.strftime(date_format)
       xml.ShippingMethod shipment.shipping_method.name
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
