@@ -1,11 +1,10 @@
-SpreeShipStation
-================
+Spree Ship Station Integration
+==============================
 
-Introduction goes here.
+Integrates [ShipStation](http://www.shipstation.com) with [Spree](http://spreecommerce.com). It enables ShipStation to pull shipments from the system and update tracking numbers.
 
-
-Example
-=======
+Configuring
+===========
 
 Example goes here.
 
@@ -16,6 +15,13 @@ Be sure to bundle your dependencies and then create a dummy test app for the spe
 
     $ bundle
     $ bundle exec rake test_app
+
+You can run tests directly via:
+
     $ bundle exec rspec spec
 
-Copyright (c) 2013 [name of extension creator], released under the New BSD License
+You can also use guard (preferred)
+    
+    $ bundle exec guard
+
+Copyright (c) 2013 Dynamo, released under the New BSD License
