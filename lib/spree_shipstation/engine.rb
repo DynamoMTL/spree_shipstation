@@ -13,8 +13,9 @@ module SpreeShipstation
 
     def self.activate
       Spree::AppConfiguration.class_eval do
-        preference :shipstation_username, :string
-        preference :shipstation_password, :string
+        preference :shipstation_username,     :string
+        preference :shipstation_password,     :string
+        preference :shipstation_weight_units, :string
       end
 
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
