@@ -1,3 +1,5 @@
+DATE_FORMAT = "%m/%d/%Y %H:%M"
+
 def address(xml, order, type)
   name    = "#{type.to_s.titleize}To"
   address = order.send("#{type}_address")
@@ -23,9 +25,9 @@ xml.Orders {
     xml.Order {
       xml.OrderID        shipment.id
       xml.OrderNumber    shipment.number
-      xml.OrderDate      order.completed_at
+      xml.OrderDate      order.completed_at.to_s(DATE_FORMAT)
       xml.OrderStatus    shipment.state
-      xml.LastModified   shipment.updated_at
+      xml.LastModified   shipment.updated_at.to_s(DATE_FORMAT)
       xml.ShippingMethod shipment.shipping_method.name
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
