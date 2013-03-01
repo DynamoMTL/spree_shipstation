@@ -27,29 +27,33 @@ Run bundler
 Configure the ShipStation API username and password. This can be done in an initializer
 
 ```ruby
-# config/initializers/shipstation.rb
+# config/initializers/spree.rb
 
-if Rails.env.production?
-  Spree::Config.shipstation_username = "brett"
-  Spree::Config.shipstation_password = "hull"
-else
-  Spree::Config.shipstation_username = "jody"
-  Spree::Config.shipstation_password = "hull"
+Spree.config do |config|
+  if Rails.env.production?
+    config.shipstation_username = "brett"
+    config.shipstation_password = "hull"
+  else
+    config.shipstation_username = "jody"
+    config.shipstation_password = "hull"
+  end
+
+  config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
 end
-
-Spree::Config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
 ```
 
 Configuring ShipStation
 -----------------------
 
-To do this, go to **Settings** and select **Stores**. Then click **Add Store** and choose the **Custom Store** option.
+To do this, go to **Settings** and select **Stores**. Then click **Add Store**, scroll down and choose the **Custom Store** option.
 
 - For **Username**, enter the username defined in your config
 - For **Password**, enter the password defined in your config
 - For **URL to custom page**, enter the url: `https://domain.tld/shipstation.xml`
+- For **Unpaid Status** enter `pending`
 - For **Paid Status** enter `ready`
 - For **Shipped Status** enter `shipped`
+- For **Cancelled Status** enter `cancelled`
 
 
 Testing
