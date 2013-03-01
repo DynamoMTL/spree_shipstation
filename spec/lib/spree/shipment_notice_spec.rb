@@ -22,9 +22,11 @@ describe Spree::ShipmentNotice do
     context "shipment not found" do
       before do
         Shipment.should_receive(:find_by_number).with('S12345').and_return(nil)
+        @result = notice.apply
       end
 
-      specify { notice.apply.should be_false }
+      specify { @result.should be_false }
+      specify { notice.error.should_not be_blank }
     end
 
     context "shipment already shipped" do

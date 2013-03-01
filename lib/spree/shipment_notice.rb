@@ -15,6 +15,9 @@ module Spree
         @shipment.ship! if @shipment.can_ship?
 
         true
+      else
+        @error = I18n.t(:shipment_not_found, number: @number)
+        false
       end
     end
   end
