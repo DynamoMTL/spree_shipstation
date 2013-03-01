@@ -18,6 +18,20 @@ Alternatively
 gem "spree_shipstation", git: "git://github.com/DynamoMTL/spree_shipstation.git"
 ```
 
+Run bundler
+
+    $ bundle
+
+Configure the ShipStation API username and password. This can be done in an initializer
+
+```
+  # config/initializers/shipstation.rb
+
+  Spree::Config.shipstation_username = "mario"
+  Spree::Config.shipstation_password = "lemieux"
+  Spree::Config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
+```
+
 
 Testing
 -------
