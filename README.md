@@ -5,7 +5,7 @@ Integrates [ShipStation](http://www.shipstation.com) with [Spree](http://spreeco
 
 For documentation on API, see [doc/ShipStationCustomStoreDevGuide.pdf](https://github.com/DynamoMTL/spree_shipstation/blob/master/doc/ShipStationCustomStoreDevGuide.pdf?raw=true)
 
-Configuring
+Configuring Spree
 -----------
 
 Add spree_shipstation to your Gemfile
@@ -39,6 +39,18 @@ end
 
 Spree::Config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
 ```
+
+Configuring ShipStation
+-----------------------
+
+To do this, go to *Settings* and select *Stores*. Then click *Add Store* and choose the *Custom Store* option.
+
+- Enter the username as configured in your config
+- Enter the password as configured in your config
+- Enter the url:
+    https://domain.tld/shipstation.xml
+- For *Paid Status* enter `ready`
+- For *Shipped Status* enter `status`
 
 
 Testing
