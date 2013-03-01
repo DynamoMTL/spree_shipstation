@@ -13,10 +13,23 @@ describe Spree::ShipmentNotice do
       before do
         Shipment.should_receive(:find_by_number).with('S12345').and_return(shipment)
         shipment.should_receive(:update_attribute).with(:tracking, '1Z1231234')
-        shipment.should_receive(:ship!)
       end
 
-      specify { notice.apply.should be_true }
+      context "transition succeeds" do
+        before  { shipment.should_receive(:ship!) }
+
+        specify { notice.apply.should be_true }
+      end
+
+      context "transition fails" do
+        before  do
+          shipment.should_receive(:ship!).and_raise('oopsie')
+          @result = notice.apply
+        end
+
+        specify { @result.should be_false }
+        specify { notice.error.should_not be_blank }
+      end
     end
 
     context "shipment not found" do

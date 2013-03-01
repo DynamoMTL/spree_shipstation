@@ -19,6 +19,10 @@ module Spree
         @error = I18n.t(:shipment_not_found, number: @number)
         false
       end
+    rescue => e
+      Rails.logger.error(e)
+      @error = I18n.t(:import_tracking_error, error: e.to_s)
+      false
     end
   end
 end
