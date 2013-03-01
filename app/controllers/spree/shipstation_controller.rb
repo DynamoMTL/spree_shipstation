@@ -14,10 +14,7 @@ module Spree
     end
 
     def shipnotify
-      if Tracking.apply(params[:order_number],
-                        params[:carrier],
-                        params[:service],
-                        params[:tracking_number])
+      if Tracking.apply(params)
         render text: 'success'
       else
         render text: 'failed', status: :bad_request

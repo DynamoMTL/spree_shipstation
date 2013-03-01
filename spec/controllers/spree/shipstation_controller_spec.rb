@@ -25,13 +25,9 @@ describe Spree::ShipstationController do
     context "shipnotify" do
       context "shipment found" do
         before do
-          SpreeShipstation::Tracking.should_receive(:apply).with('S12345', 'UPS', 'Next Day', '1Z123123123123').and_return(true)
+          SpreeShipstation::Tracking.should_receive(:apply).with(hash_including(order_number: 'S12345')).and_return(true)
 
-          get :shipnotify, order_number:    'S12345',
-                           carrier:         'UPS',
-                           service:         'Next Day',
-                           tracking_number: '1Z123123123123',
-                           use_route: :spree
+          get :shipnotify, order_number: 'S12345', use_route: :spree
         end
 
         specify { response.should be_success }
