@@ -45,12 +45,11 @@ Configuring ShipStation
 
 To do this, go to *Settings* and select *Stores*. Then click *Add Store* and choose the *Custom Store* option.
 
-- Enter the username as configured in your config
-- Enter the password as configured in your config
-- Enter the url:
-    https://domain.tld/shipstation.xml
-- For *Paid Status* enter `ready`
-- For *Shipped Status* enter `status`
+- For **Username**, enter the username defined in your config
+- For **Password**, enter the password defined in your config
+- For **URL to custom page**, enter the url: `https://domain.tld/shipstation.xml`
+- For **Paid Status** enter `ready`
+- For **Shipped Status** enter `shipped`
 
 
 Testing
