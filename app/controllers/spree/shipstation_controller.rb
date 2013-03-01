@@ -2,8 +2,7 @@ include SpreeShipstation
 
 module Spree
   class ShipstationController < Spree::StoreController
-    include BasicAuthentication
-    ssl_required
+    include BasicSslAuthentication
 
     DATE_FORMAT = "%m/%d/%Y %H:%M %Z"
 
@@ -14,10 +13,12 @@ module Spree
     end
 
     def shipnotify
-      if Tracking.apply(params)
-        render text: 'success'
+      notice = ShipmentNotice.new(params)
+
+      if notice.apply
+        render(text: 'success')
       else
-        render text: 'failed', status: :bad_request
+        render(text: notice.error, status: :bad_request)
       end
     end
 

@@ -23,9 +23,17 @@ describe Spree::ShipstationController do
     end
 
     context "shipnotify" do
+      let(:notice) { mock(:notice) }
+
+      before do
+        Spree::ShipmentNotice.should_receive(:new)
+                             .with(hash_including(order_number: 'S12345'))
+                             .and_return(notice)
+      end
+
       context "shipment found" do
         before do
-          SpreeShipstation::Tracking.should_receive(:apply).with(hash_including(order_number: 'S12345')).and_return(true)
+          notice.should_receive(:apply).and_return(true)
 
           get :shipnotify, order_number: 'S12345', use_route: :spree
         end
@@ -36,10 +44,10 @@ describe Spree::ShipstationController do
 
       context "shipment not found" do
         before do
-          SpreeShipstation::Tracking.should_receive(:apply)
-                                    .and_return(false)
+          notice.should_receive(:apply).and_return(false)
+          notice.should_receive(:error).and_return("failed")
 
-          get :shipnotify, use_route: :spree
+          get :shipnotify, order_number: 'S12345', use_route: :spree
         end
 
         specify { response.code.should == '400' }

@@ -1,8 +1,9 @@
 module Spree
-  module BasicAuthentication
+  module BasicSslAuthentication
     extend ActiveSupport::Concern
 
     included do
+      ssl_required
       before_filter :authenticate
     end
 
