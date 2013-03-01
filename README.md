@@ -8,13 +8,13 @@ Configuring
 
 Add spree_shipstation to your Gemfile
 
-```
+```ruby
 gem "spree_shipstation"
 ```
 
 Alternatively
 
-```
+```ruby
 gem "spree_shipstation", git: "git://github.com/DynamoMTL/spree_shipstation.git"
 ```
 
@@ -24,7 +24,7 @@ Run bundler
 
 Configure the ShipStation API username and password. This can be done in an initializer
 
-```
+```ruby
   # config/initializers/shipstation.rb
 
   Spree::Config.shipstation_username = "mario"
