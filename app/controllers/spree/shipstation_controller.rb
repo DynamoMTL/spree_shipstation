@@ -2,8 +2,8 @@ include SpreeShipstation
 
 module Spree
   class ShipstationController < Spree::StoreController
+    include BasicAuthentication
     ssl_required
-    before_filter :authenticate
 
     DATE_FORMAT = "%m/%d/%Y %H:%M %Z"
 
@@ -24,13 +24,7 @@ module Spree
       end
     end
 
-  protected
-    def authenticate
-      authenticate_or_request_with_http_basic do |username, password|
-        username == Spree::Config[:shipstation_username] && password == Spree::Config[:shipstation_password]
-      end
-    end
-
+  private
     def date_param(name)
       Time.strptime(params[name] + " UTC", DATE_FORMAT)
     end
