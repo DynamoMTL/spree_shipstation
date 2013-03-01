@@ -7,14 +7,16 @@ def address(xml, order, type)
   xml.__send__(name) {
     xml.Name       address.full_name
     xml.Company    address.company
+
     if type == :ship
       xml.Address1   address.address1
       xml.Address2   address.address2
+      xml.City       address.city
+      xml.State      address.state.abbr
+      xml.PostalCode address.zipcode
+      xml.Country    address.country.iso
     end
-    xml.City       address.city
-    xml.State      address.state.abbr
-    xml.PostalCode address.zipcode
-    xml.Country    address.country.iso
+
     xml.Phone      address.phone
   }
 end
