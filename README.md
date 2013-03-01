@@ -3,6 +3,8 @@ Spree/ShipStation Integration
 
 Integrates [ShipStation](http://www.shipstation.com) with [Spree](http://spreecommerce.com). It enables ShipStation to pull shipments from the system and update tracking numbers.
 
+For documentation on API, see doc/ShipStationCustomStoreDevGuide.pdf
+
 Configuring
 -----------
 
