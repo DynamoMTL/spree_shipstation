@@ -43,7 +43,7 @@ Spree::Config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
 Configuring ShipStation
 -----------------------
 
-To do this, go to *Settings* and select *Stores*. Then click *Add Store* and choose the *Custom Store* option.
+To do this, go to **Settings** and select **Stores**. Then click **Add Store** and choose the **Custom Store** option.
 
 - For **Username**, enter the username defined in your config
 - For **Password**, enter the password defined in your config
