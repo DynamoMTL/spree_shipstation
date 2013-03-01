@@ -3,8 +3,7 @@ include SpreeShipstation
 module Spree
   class ShipstationController < Spree::StoreController
     include BasicSslAuthentication
-
-    DATE_FORMAT = "%m/%d/%Y %H:%M %Z"
+    include Spree::DateParamHelper
 
     def export
       @shipments = Shipment.exportable
@@ -20,11 +19,6 @@ module Spree
       else
         render(text: notice.error, status: :bad_request)
       end
-    end
-
-  private
-    def date_param(name)
-      Time.strptime(params[name] + " UTC", DATE_FORMAT)
     end
   end
 end

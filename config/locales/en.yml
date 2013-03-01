@@ -1,4 +1,4 @@
 ---
 en:
   shipment_not_found: Shipment %{number} was not found
-  import_tracking_error: Tracking number cannot be imported. Error: %{error}
+  import_tracking_error: "Tracking number cannot be imported. Error: %{error}"
