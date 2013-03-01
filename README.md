@@ -25,11 +25,11 @@ Run bundler
 Configure the ShipStation API username and password. This can be done in an initializer
 
 ```ruby
-  # config/initializers/shipstation.rb
+# config/initializers/shipstation.rb
 
-  Spree::Config.shipstation_username = "mario"
-  Spree::Config.shipstation_password = "lemieux"
-  Spree::Config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
+Spree::Config.shipstation_username = "mario"
+Spree::Config.shipstation_password = "lemieux"
+Spree::Config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
 ```
 
 
