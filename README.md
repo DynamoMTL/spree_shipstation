@@ -3,32 +3,31 @@ Spree/ShipStation Integration
 
 Integrates [ShipStation](http://www.shipstation.com) with [Spree](http://spreecommerce.com). It enables ShipStation to pull shipments from the system and update tracking numbers.
 
-For documentation on API, see [doc/ShipStationCustomStoreDevGuide.pdf](https://github.com/DynamoMTL/spree_shipstation/blob/master/doc/ShipStationCustomStoreDevGuide.pdf?raw=true)
+For documentation on the API, see [doc/ShipStationCustomStoreDevGuide.pdf](https://github.com/DynamoMTL/spree_shipstation/blob/master/doc/ShipStationCustomStoreDevGuide.pdf?raw=true)
 
 Configuring Spree
 -----------
 
-Add spree_shipstation to your Gemfile
+Add spree_shipstation to your Gemfile:
 
 ```ruby
 gem "spree_shipstation"
 ```
 
-Alternatively
+Alternatively you can use the git repo directly:
 
 ```ruby
 gem "spree_shipstation", git: "git://github.com/DynamoMTL/spree_shipstation.git"
 ```
 
-Run bundler
+Then, run bundler
 
     $ bundle
 
-Configure the ShipStation API username and password. This can be done in an initializer
+Configure the ShipStation API username and password. This can be done in the app's spree initializer
 
 ```ruby
 # config/initializers/spree.rb
-
 Spree.config do |config|
   if Rails.env.production?
     config.shipstation_username = "brett"
