@@ -36,6 +36,7 @@ xml.Orders {
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
       xml.ShippingAmount order.ship_total
+      xml.CustomField1   order.number
 
 =begin
       if order.gift?
