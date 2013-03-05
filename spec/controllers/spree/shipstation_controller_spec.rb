@@ -35,7 +35,7 @@ describe Spree::ShipstationController do
         before do
           notice.should_receive(:apply).and_return(true)
 
-          get :shipnotify, order_number: 'S12345', use_route: :spree
+          post :shipnotify, order_number: 'S12345', use_route: :spree
         end
 
         specify { response.should be_success }
@@ -47,7 +47,7 @@ describe Spree::ShipstationController do
           notice.should_receive(:apply).and_return(false)
           notice.should_receive(:error).and_return("failed")
 
-          get :shipnotify, order_number: 'S12345', use_route: :spree
+          post :shipnotify, order_number: 'S12345', use_route: :spree
         end
 
         specify { response.code.should == '400' }
@@ -56,7 +56,7 @@ describe Spree::ShipstationController do
     end
 
     it "doesnt know unknown" do
-      expect { get :unknown, use_route: :spree }.to raise_error(AbstractController::ActionNotFound)
+      expect { post :unknown, use_route: :spree }.to raise_error(AbstractController::ActionNotFound)
     end
   end
 
