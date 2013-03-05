@@ -19,10 +19,7 @@ module Spree
     end
 
     def update
-      @shipment.update_attribute(:tracking, @tracking)
-      @shipment.update_attribute(:state,    'shipped') if @shipment.can_ship?
-
-      true
+      @shipment.update_attributes(tracking: @tracking, state: 'shipped')
     end
 
     def not_found
