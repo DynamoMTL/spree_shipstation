@@ -16,14 +16,16 @@ describe Spree::ShipmentNotice do
       end
 
       context "transition succeeds" do
-        before  { shipment.should_receive(:ship!) }
+        before  { shipment.should_receive(:update_attribute).with(:state, 'shipped') }
 
         specify { notice.apply.should be_true }
       end
 
       context "transition fails" do
         before  do
-          shipment.should_receive(:ship!).and_raise('oopsie')
+          shipment.should_receive(:update_attribute)
+                  .with(:state, 'shipped')
+                  .and_raise('oopsie')
           @result = notice.apply
         end
 
