@@ -20,7 +20,7 @@ module Spree
 
     def update
       @shipment.update_attribute(:tracking, @tracking)
-      @shipment.update_attribute(:state, 'shipped')
+      @shipment.reload.update_attribute(:state, 'shipped')
     end
 
     def not_found
