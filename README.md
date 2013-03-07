@@ -77,6 +77,6 @@ To run tests with guard (preferred):
 
 Caveats
 -------
-- If you change the shipping method of an order in ship station, the change will not be reflected in spree and the tracking link might not work
+- If you change the shipping method of an order in ShipStation, the change will not be reflected in Spree and the tracking link might not work
 
 Copyright (c) 2013 Dynamo, released under the New BSD License
