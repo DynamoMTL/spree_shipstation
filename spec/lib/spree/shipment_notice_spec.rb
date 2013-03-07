@@ -8,7 +8,7 @@ describe Spree::ShipmentNotice do
 
   context "#apply" do
     context "shipment found" do
-      let(:shipment) { mock_model(Shipment, can_ship?: true) }
+      let(:shipment) { mock_model(Shipment, :shipped? => false) }
 
       before do
         Shipment.should_receive(:find_by_number).with('S12345').and_return(shipment)
@@ -16,14 +16,14 @@ describe Spree::ShipmentNotice do
       end
 
       context "transition succeeds" do
-        before  { shipment.should_receive(:update_attribute).with(:state, 'shipped') }
+        before { shipment.stub_chain(:reload, :update_attribute).with(:state, 'shipped') }
 
         specify { notice.apply.should be_true }
       end
 
       context "transition fails" do
         before  do
-          shipment.should_receive(:update_attribute)
+          shipment.stub_chain(:reload, :update_attribute)
                   .with(:state, 'shipped')
                   .and_raise('oopsie')
           @result = notice.apply
@@ -45,12 +45,11 @@ describe Spree::ShipmentNotice do
     end
 
     context "shipment already shipped" do
-      let(:shipment) { mock_model(Shipment, 'can_ship?' => false) }
+      let(:shipment) { mock_model(Shipment, :shipped? => true) }
 
       before do
         Shipment.should_receive(:find_by_number).with('S12345').and_return(shipment)
         shipment.should_receive(:update_attribute).with(:tracking, '1Z1231234')
-        shipment.should_not_receive(:ship!)
       end
 
       specify { notice.apply.should be_true }
