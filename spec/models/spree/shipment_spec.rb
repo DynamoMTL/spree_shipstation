@@ -34,6 +34,28 @@ describe Spree::Shipment do
     specify { should_not include(pending)}
   end
 
+  context "shipped_email" do
+    let(:shipment) { create_shipment(state: 'ready') }
+
+    context "enabled" do
+      it "sends email" do
+        Spree::Config.send_shipped_email = true
+        mail_message = mock "Mail::Message"
+        Spree::ShipmentMailer.should_receive(:shipped_email).with(shipment).and_return mail_message
+        mail_message.should_receive :deliver
+        shipment.ship!
+      end
+    end
+
+    context "disabled" do
+      it "doesnt send email" do
+        Spree::Config.send_shipped_email = false
+        Spree::ShipmentMailer.should_not_receive(:shipped_email)
+        shipment.ship!
+      end
+    end
+  end
+
   def create_shipment(options={})
     FactoryGirl.create(:shipment, options).tap do |shipment|
       shipment.update_column(:state, options[:state]) if options[:state]
