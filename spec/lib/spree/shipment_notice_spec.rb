@@ -22,7 +22,7 @@ describe Spree::ShipmentNotice do
       end
 
       context "transition fails" do
-        before  do
+        before do
           shipment.stub_chain(:reload, :update_attribute)
                   .with(:state, 'shipped')
                   .and_raise('oopsie')
