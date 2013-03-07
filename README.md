@@ -74,4 +74,9 @@ To run tests with guard (preferred):
     
     $ bundle exec guard
 
+
+Caveats
+-------
+- If you change the shipping method of an order in ship station, the change will not be reflected in spree and the tracking link might not work
+
 Copyright (c) 2013 Dynamo, released under the New BSD License
