@@ -35,7 +35,7 @@ describe Spree::Shipment do
   end
 
   def create_shipment(options={})
-    Factory.create(:shipment, options).tap do |shipment|
+    FactoryGirl.create(:shipment, options).tap do |shipment|
       shipment.update_column(:state, options[:state]) if options[:state]
     end
   end
