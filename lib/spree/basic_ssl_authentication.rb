@@ -10,7 +10,7 @@ module Spree
   protected
     def authenticate
       authenticate_or_request_with_http_basic do |username, password|
-        username == Config.shipstation_username && password == Config.shipstation_password
+        username == Spree::Config.shipstation_username && password == Spree::Config.shipstation_password
       end
     end
   end

@@ -15,7 +15,7 @@ module Spree
 
   private
     def locate
-      @shipment = Shipment.find_by_number(@number)
+      @shipment = Spree::Shipment.find_by_number(@number)
     end
 
     def update

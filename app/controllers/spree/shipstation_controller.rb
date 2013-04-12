@@ -6,13 +6,13 @@ module Spree
     include Spree::DateParamHelper
 
     def export
-      @shipments = Shipment.exportable
+      @shipments = Spree::Shipment.exportable
                            .between(date_param(:start_date),
                                     date_param(:end_date))
     end
 
     def shipnotify
-      notice = ShipmentNotice.new(params)
+      notice = Spree::ShipmentNotice.new(params)
 
       if notice.apply
         render(text: 'success')
