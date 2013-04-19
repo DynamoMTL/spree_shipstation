@@ -12,7 +12,7 @@ def address(xml, order, type)
       xml.Address1   address.address1
       xml.Address2   address.address2
       xml.City       address.city
-      xml.State      address.state.abbr
+      xml.State      address.state ? address.state.abbr : address.state_name
       xml.PostalCode address.zipcode
       xml.Country    address.country.iso
     end
