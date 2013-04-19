@@ -60,7 +60,7 @@ end
 
 And you can configure them with:
 
-  $ heroku config:set SHIPSTATION_USERNAME=brett SHIPSTATION_PASSWORD=hull
+    $ heroku config:set SHIPSTATION_USERNAME=brett SHIPSTATION_PASSWORD=hull
 
 Configuring ShipStation
 -----------------------
