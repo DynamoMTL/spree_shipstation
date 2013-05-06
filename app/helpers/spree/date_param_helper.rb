@@ -4,7 +4,7 @@ module Spree
 
   private
     def date_param(name)
-      Time.strptime(params[name] + " PST", DATE_FORMAT)
+      Time.strptime(params[name] + " PDT", DATE_FORMAT)
     end
   end
 end
