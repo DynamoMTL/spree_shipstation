@@ -46,7 +46,7 @@ xml.Orders {
 =end
 
       xml.Customer {
-        xml.CustomerCode order.email
+        xml.CustomerCode order.user.id
         address(xml, order, :bill)
         address(xml, order, :ship)
       }
