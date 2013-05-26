@@ -9,7 +9,8 @@ gem 'guard-spork'
 gem 'rb-inotify', :require => false
 gem 'rb-fsevent', :require => false
 gem 'rb-fchange', :require => false
-gem 'libnotify'
+gem 'libnotify' if /linux/ =~ RUBY_PLATFORM
+gem 'growl' if /darwin/ =~ RUBY_PLATFORM
 gem 'database_cleaner'
 gem 'rspec-rails'
 gem 'spork'
