@@ -51,7 +51,7 @@ xml.Orders {
         address(xml, order, :ship)
       }
       xml.Items {
-        shipment.line_items.each do |line|
+        shipment.order.line_items.select { |li| shipment.inventory_units.pluck(:variant_id).include?(li.variant_id) }.each do |line|
           variant = line.variant
           xml.Item {
             xml.SKU         variant.sku
