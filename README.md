@@ -39,6 +39,9 @@ Spree.config do |config|
 
   config.shipstation_weight_units = "Grams" # Grams, Ounces or Pounds
 
+  # choose which number to send shipstation, use :shipment or :order, default is :shipment
+  config.shipstation_number = :shipment
+
   # if you prefer to send notifications via shipstation
   config.send_shipped_email = false
 end
