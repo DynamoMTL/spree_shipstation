@@ -16,7 +16,11 @@ describe Spree::ShipmentNotice do
       end
 
       context "transition succeeds" do
-        before { shipment.stub_chain(:reload, :update_attribute).with(:state, 'shipped') }
+        before do
+          shipment.stub_chain(:reload, :update_attribute).with(:state, 'shipped')
+          shipment.stub_chain(:inventory_units, :each)
+          shipment.should_receive(:touch).with(:shipped_at)
+        end
 
         specify { notice.apply.should be_true }
       end
