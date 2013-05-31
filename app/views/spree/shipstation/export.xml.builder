@@ -28,7 +28,7 @@ xml.Orders {
 
     xml.Order {
       xml.OrderID        shipment.id
-      xml.OrderNumber    shipment.number
+      xml.OrderNumber    Spree::Config.shipstation_number == :order ? order.number : shipment.number
       xml.OrderDate      order.completed_at.strftime(date_format)
       xml.OrderStatus    shipment.state
       xml.LastModified   shipment.updated_at.strftime(date_format)

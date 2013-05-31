@@ -17,6 +17,7 @@ module SpreeShipstation
         preference :shipstation_username,     :string
         preference :shipstation_password,     :string
         preference :shipstation_weight_units, :string
+        preference :shipstation_number,       :symbol, default: :shipment
       end
     end
 

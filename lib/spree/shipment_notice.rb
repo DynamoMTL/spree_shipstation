@@ -15,7 +15,12 @@ module Spree
 
   private
     def locate
-      @shipment = Spree::Shipment.find_by_number(@number)
+      if Spree::Config.shipstation_number == :order
+        order = Spree::Order.find_by_number(@number)
+        @shipment = order.try(:shipment)
+      else
+        @shipment = Spree::Shipment.find_by_number(@number)
+      end
     end
 
     def update
@@ -26,6 +31,7 @@ module Spree
         @shipment.inventory_units.each &:ship!
         @shipment.touch :shipped_at
       end
+
       true
     end
 
