@@ -32,7 +32,7 @@ xml.Orders {
       xml.OrderDate      order.completed_at.strftime(date_format)
       xml.OrderStatus    shipment.state
       xml.LastModified   shipment.updated_at.strftime(date_format)
-      xml.ShippingMethod shipment.shipping_method.name
+      xml.ShippingMethod shipment.shipping_method.try(:name)
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
       xml.ShippingAmount order.ship_total
