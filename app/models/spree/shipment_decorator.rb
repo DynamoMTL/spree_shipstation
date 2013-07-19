@@ -1,5 +1,5 @@
 Spree::Shipment.class_eval do
-  scope :exportable, where('state != ?', 'pending')
+  scope :exportable, joins(:order).where('spree_shipments.state != ?', 'pending')
 
   def self.between(from, to)
     where(updated_at: from..to)
