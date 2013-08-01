@@ -9,6 +9,8 @@ module Spree
       @shipments = Spree::Shipment.exportable
                            .between(date_param(:start_date),
                                     date_param(:end_date))
+                           .page(params[:page])
+                           .per(50)
     end
 
     def shipnotify
