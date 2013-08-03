@@ -22,7 +22,7 @@ def address(xml, order, type)
 end
 
 xml.instruct!
-xml.Orders {
+xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
   @shipments.each do |shipment|
     order = shipment.order
 
