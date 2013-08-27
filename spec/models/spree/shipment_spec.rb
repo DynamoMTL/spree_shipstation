@@ -5,8 +5,11 @@ describe Spree::Shipment do
     before do
       @active = []
 
-      create_shipment(updated_at: Time.now - 1.days)
-      create_shipment(updated_at: Time.now + 1.days)
+      create_shipment(updated_at: 1.day.ago, order: create(:order, updated_at: 1.day.ago))
+      create_shipment(updated_at: 1.day.from_now, order: create(:order, updated_at: 1.day.from_now))
+    
+      # Old shipment thats order was recently updated..
+      @active << create_shipment(updated_at: 1.week.ago, order: create(:order, updated_at: Time.now))
 
       @active << create_shipment(updated_at: Time.now)
       @active << create_shipment(updated_at: Time.now)
@@ -14,7 +17,7 @@ describe Spree::Shipment do
 
     subject { Spree::Shipment.between(Time.now-1.hour, Time.now + 1.hours) }
 
-    specify { should have(2).shipment }
+    specify { should have(3).shipment }
 
     specify { should == @active }
   end
