@@ -5,12 +5,11 @@ describe Spree::Shipment do
     before do
       @active = []
 
-      create_shipment(updated_at: Time.now - 1.days)
-      create_shipment(updated_at: Time.now + 1.days)
-      
-      old_shipment_recent_completed_at = create_shipment(updated_at: 1.week.ago)
-      old_shipment_recent_completed_at.order.touch(:completed_at)
-      @active << old_shipment_recent_completed_at
+      create_shipment(updated_at: 1.day.ago, order: create(:order, updated_at: 1.day.ago))
+      create_shipment(updated_at: 1.day.from_now, order: create(:order, updated_at: 1.day.from_now))
+    
+      # Old shipment thats order was recently updated..
+      @active << create_shipment(updated_at: 1.week.ago, order: create(:order, updated_at: Time.now))
 
       @active << create_shipment(updated_at: Time.now)
       @active << create_shipment(updated_at: Time.now)
