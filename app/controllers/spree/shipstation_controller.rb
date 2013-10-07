@@ -6,6 +6,9 @@ module Spree
     include BasicSslAuthentication
     include Spree::DateParamHelper
 
+
+    skip_before_filter :verify_authenticity_token, only: :shipnotify
+
     def export
       @shipments = Spree::Shipment.exportable
                            .between(date_param(:start_date),
