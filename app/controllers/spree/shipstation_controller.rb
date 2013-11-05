@@ -1,9 +1,13 @@
 include SpreeShipstation
 
 module Spree
-  class ShipstationController < Spree::StoreController
+  class ShipstationController < Spree::BaseController
+    layout false
     include BasicSslAuthentication
     include Spree::DateParamHelper
+
+
+    skip_before_filter :verify_authenticity_token, only: :shipnotify
 
     def export
       @shipments = Spree::Shipment.exportable

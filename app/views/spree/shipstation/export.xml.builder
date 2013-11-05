@@ -39,9 +39,8 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
       xml.CustomField1   order.number
 
 =begin
-      if order.gift?
-        xml.Gift
-        xml.GiftMessage
+      if order.gift == 'custom'
+        xml.GiftMessage  order.message
       end
 =end
 
