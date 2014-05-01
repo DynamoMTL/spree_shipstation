@@ -6,7 +6,7 @@ module Spree
     include Spree::DateParamHelper
 
     def export
-      @shipments = Spree::Shipment.exportable.international
+      @shipments = Spree::Shipment.exportable
                            .between(date_param(:start_date),
                                     date_param(:end_date))
                            .page(params[:page])
