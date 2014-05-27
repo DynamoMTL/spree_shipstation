@@ -47,8 +47,12 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
 
       xml.Customer {
         xml.CustomerCode order.email.slice(0, 50)
-        address(xml, order, :bill)
-        address(xml, order, :ship)
+        begin
+          address(xml, order, :bill)
+          address(xml, order, :ship)
+        rescue
+          # send Raven
+        end
       }
       xml.Items {
         shipment.line_items.each do |line|
