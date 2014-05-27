@@ -25,6 +25,17 @@ xml.instruct!
 xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
   @shipments.each do |shipment|
     order = shipment.order
+    if order.bill_address.nil? or order.ship_address.nil?
+      Raven.capture_message "Shipstation Error",
+        logger: 'logger',
+        extra: {
+          order_number: order.number
+        },
+        tags: {
+          environment: 'production'
+        }
+      next
+    end
 
     xml.Order {
       xml.OrderID        shipment.id
@@ -47,12 +58,8 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
 
       xml.Customer {
         xml.CustomerCode order.email.slice(0, 50)
-        begin
-          address(xml, order, :bill)
-          address(xml, order, :ship)
-        rescue
-          # send Raven
-        end
+        address(xml, order, :bill)
+        address(xml, order, :ship)
       }
       xml.Items {
         shipment.line_items.each do |line|
