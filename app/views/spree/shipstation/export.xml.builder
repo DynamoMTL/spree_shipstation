@@ -46,7 +46,7 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
       xml.ShippingMethod shipment.shipping_method.try(:name)
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
-      xml.ShippingAmount order.ship_total
+      xml.ShippingAmount order.try(:ship_total)
       xml.CustomField1   order.number
 
 =begin
