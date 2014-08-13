@@ -1,9 +1,10 @@
 include SpreeShipstation
 
 module Spree
-  class ShipstationController < Spree::StoreController
+  class ShipstationController < BaseController
     include BasicSslAuthentication
     include Spree::DateParamHelper
+    layout false
 
     protect_from_forgery :except => :shipnotify
 

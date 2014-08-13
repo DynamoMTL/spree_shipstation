@@ -25,14 +25,12 @@ module Spree
 
     def update
       @shipment.update_attribute(:tracking, @tracking)
-
-      unless @shipment.shipped?
-        @shipment.reload.update_attribute(:state, 'shipped')
-        @shipment.inventory_units.each &:ship!
-        @shipment.touch :shipped_at
+      if @shipment.can_ship?
+        unless @shipment.ship
+          handle_error @shipment.inspect
+        end
       end
-
-      true
+      @error.blank?
     end
 
     def not_found

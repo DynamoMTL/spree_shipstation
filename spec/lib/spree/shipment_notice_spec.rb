@@ -8,7 +8,7 @@ describe Spree::ShipmentNotice do
 
   context "#apply" do
     context "shipment found" do
-      let(:shipment) { mock_model(Shipment, :shipped? => false) }
+      let(:shipment) { stub_model(Shipment, :shipped? => false) }
 
       before do
         Spree::Config.shipstation_number = :shipment
@@ -18,43 +18,39 @@ describe Spree::ShipmentNotice do
 
       context "transition succeeds" do
         before do
-          shipment.stub_chain(:reload, :update_attribute).with(:state, 'shipped')
-          shipment.stub_chain(:inventory_units, :each)
-          shipment.should_receive(:touch).with(:shipped_at)
+          shipment.stub(:can_ship?) { true }
+          shipment.should_receive(:ship) { true }
         end
 
-        specify { notice.apply.should be_true }
+        specify { notice.apply.should be_truthy }
       end
 
       context "transition fails" do
         before do
-          shipment.stub_chain(:reload, :update_attribute)
-                  .with(:state, 'shipped')
-                  .and_raise('oopsie')
+          shipment.stub(:can_ship?) { true }
+          shipment.stub(:ship) { false }
           @result = notice.apply
         end
 
-        specify { @result.should be_false }
+        specify { @result.should be_falsey }
         specify { notice.error.should_not be_blank }
       end
     end
 
     context "using order number instead of shipment number" do
-      let(:shipment) { mock_model(Shipment, :shipped? => false) }
-      let(:order)    { mock_model(Order, shipment: shipment) }
+      let(:shipment) { stub_model(Shipment, :shipped? => false) }
+      let(:order)    { stub_model(Order, shipment: shipment) }
 
       before do
         Spree::Config.shipstation_number = :order
         Order.should_receive(:find_by_number).with('S12345').and_return(order)
-        shipment.should_receive(:update_attribute).with(:tracking, '1Z1231234')
-        shipment.stub_chain(:inventory_units, :each)
-        shipment.should_receive(:touch).with(:shipped_at)
+
+        shipment.stub(:can_ship?) { true }
+        shipment.should_receive(:ship) { true }
       end
 
       context "transition succeeds" do
-        before { shipment.stub_chain(:reload, :update_attribute).with(:state, 'shipped') }
-
-        specify { notice.apply.should be_true }
+        specify { notice.apply.should be_truthy }
       end
     end
 
@@ -65,12 +61,12 @@ describe Spree::ShipmentNotice do
         @result = notice.apply
       end
 
-      specify { @result.should be_false }
+      specify { @result.should be_falsey }
       specify { notice.error.should_not be_blank }
     end
 
     context "shipment already shipped" do
-      let(:shipment) { mock_model(Shipment, :shipped? => true) }
+      let(:shipment) { stub_model(Shipment, :shipped? => true) }
 
       before do
         Spree::Config.shipstation_number = :shipment
@@ -78,7 +74,7 @@ describe Spree::ShipmentNotice do
         shipment.should_receive(:update_attribute).with(:tracking, '1Z1231234')
       end
 
-      specify { notice.apply.should be_true }
+      specify { notice.apply.should be_truthy }
     end
   end
 end

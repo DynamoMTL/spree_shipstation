@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ShipstationController do
+describe Spree::ShipstationController, type: :controller do
   before do
     controller.stub(check_authorization: false, spree_current_user: FactoryGirl.create(:user))
     @request.accept = 'application/xml'
@@ -10,7 +10,7 @@ describe Spree::ShipstationController do
     before { login }
 
     context "export" do
-      let(:shipments) { mock }
+      let(:shipments) { double }
 
       before do
         Spree::Shipment.stub_chain(:exportable, :between).with(Time.new(2013, 12, 31,  8, 0, 0, "+00:00"),
@@ -26,7 +26,7 @@ describe Spree::ShipstationController do
     end
 
     context "shipnotify" do
-      let(:notice) { mock(:notice) }
+      let(:notice) { double(:notice) }
 
       before do
         Spree::ShipmentNotice.should_receive(:new)
