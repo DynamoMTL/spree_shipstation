@@ -5,6 +5,8 @@ module Spree
     include BasicSslAuthentication
     include Spree::DateParamHelper
 
+    protect_from_forgery :except => :shipnotify
+
     def export
       @shipments = Spree::Shipment.exportable
                            .between(date_param(:start_date),
