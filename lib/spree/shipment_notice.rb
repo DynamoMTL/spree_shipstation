@@ -17,7 +17,9 @@ module Spree
     def locate
       if Spree::Config.shipstation_number == :order
         order = Spree::Order.find_by_number(@number)
-        @shipment = order.try(:shipment)
+        if order
+          @shipment = order.shipments.first
+        end
       else
         @shipment = Spree::Shipment.find_by_number(@number)
       end
