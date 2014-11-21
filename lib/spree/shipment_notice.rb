@@ -17,7 +17,7 @@ module Spree
     def locate
       if Spree::Config.shipstation_number == :order
         order = Spree::Order.find_by_number(@number)
-        @shipment = order.try(:shipment)
+        @shipment = order.try(:shipments).try(:first)
       else
         @shipment = Spree::Shipment.find_by_number(@number)
       end
@@ -27,9 +27,10 @@ module Spree
       @shipment.update_attribute(:tracking, @tracking)
 
       unless @shipment.shipped?
-        @shipment.reload.update_attribute(:state, 'shipped')
-        @shipment.inventory_units.each &:ship!
-        @shipment.touch :shipped_at
+        @shipment.reload.ship!
+        # @shipment.reload.update_attribute(:state, 'shipped')
+        # @shipment.inventory_units.each &:ship!
+        # @shipment.touch :shipped_at
       end
 
       true
