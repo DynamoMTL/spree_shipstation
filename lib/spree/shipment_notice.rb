@@ -27,7 +27,7 @@ module Spree
       @shipment.update_attribute(:tracking, @tracking)
 
       unless @shipment.shipped?
-        @shipment.ship!
+        @shipment.reload.ship!
         # @shipment.reload.update_attribute(:state, 'shipped')
         # @shipment.inventory_units.each &:ship!
         # @shipment.touch :shipped_at
