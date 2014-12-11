@@ -39,7 +39,7 @@ describe Spree::ShipmentNotice do
 
     context "using order number instead of shipment number" do
       let(:shipment) { stub_model(Shipment, :shipped? => false) }
-      let(:order)    { stub_model(Order, shipment: shipment) }
+      let(:order)    { stub_model(Order, shipments: [shipment]) }
 
       before do
         Spree::Config.shipstation_number = :order
