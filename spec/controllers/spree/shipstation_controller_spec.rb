@@ -30,7 +30,7 @@ describe Spree::ShipstationController, type: :controller do
 
       before do
         Spree::ShipmentNotice.should_receive(:new)
-                             .with(hash_including(order_number: 'S12345'))
+                             .with(hash_including(order_number: 'S12345'), "order_number=S12345")
                              .and_return(notice)
       end
 

@@ -17,7 +17,7 @@ module Spree
     end
 
     def shipnotify
-      notice = Spree::ShipmentNotice.new(params)
+      notice = Spree::ShipmentNotice.new(params, request.body.string)
 
       if notice.apply
         render(text: 'success')

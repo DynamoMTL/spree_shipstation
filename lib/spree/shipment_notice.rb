@@ -2,8 +2,8 @@ module Spree
   class ShipmentNotice
     attr_reader :error
 
-    def initialize(params) 
-      @number   = params[:order_number]
+    def initialize(params, body)
+      @id   = Hash.from_xml(body)["ShipNotice"]["OrderID"]
       @tracking = params[:tracking_number]
     end
 
@@ -13,16 +13,10 @@ module Spree
       handle_error(e)
     end
 
-  private
+    private
+
     def locate
-      if Spree::Config.shipstation_number == :order
-        order = Spree::Order.find_by_number(@number)
-        if order
-          @shipment = order.shipments.first
-        end
-      else
-        @shipment = Spree::Shipment.find_by_number(@number)
-      end
+      @shipment = Spree::Shipment.find_by_id(@id)
     end
 
     def update
@@ -36,10 +30,10 @@ module Spree
     end
 
     def not_found
-      @error = I18n.t(:shipment_not_found, number: @number)
+      @error = I18n.t(:shipment_not_found, number: @id)
       false
     end
-    
+
     def handle_error(error)
       Rails.logger.error(error)
       @error = I18n.t(:import_tracking_error, error: error.to_s)
