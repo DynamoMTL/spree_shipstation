@@ -51,16 +51,16 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
         address(xml, order, :ship)
       }
       xml.Items {
-        shipment.line_items.each do |line|
-          variant = line.variant
+        shipment.manifest.each do |item|
+          variant = item.variant
           xml.Item {
             xml.SKU         variant.sku
             xml.Name        [variant.product.name, variant.options_text].join(' ')
             xml.ImageUrl    variant.images.first.try(:attachment).try(:url)
             xml.Weight      variant.weight.to_f
             xml.WeightUnits Spree::Config.shipstation_weight_units
-            xml.Quantity    line.quantity
-            xml.UnitPrice   line.price
+            xml.Quantity    item.quantity
+            xml.UnitPrice   item.line_item.price
 
             if variant.option_values.present?
               xml.Options {
