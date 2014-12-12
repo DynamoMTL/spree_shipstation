@@ -36,7 +36,10 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
       xml.OrderTotal     order.total
       xml.TaxAmount      order.tax_total
       xml.ShippingAmount order.ship_total
-      xml.CustomField1   order.number
+
+      if order.shipments.first != shipment
+        xml.CustomField1   "Exchange or Replacement Shipment. Not the first shipment for this order."
+      end
       xml.CustomField2   shipment.number
 
 =begin
