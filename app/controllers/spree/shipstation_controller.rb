@@ -9,7 +9,8 @@ module Spree
     protect_from_forgery :except => :shipnotify
 
     def export
-      @shipments = Spree::Shipment.exportable
+      @shipments = Spree::Shipment.order(:id)
+                           .exportable
                            .between(date_param(:start_date),
                                     date_param(:end_date))
                            .page(params[:page])
