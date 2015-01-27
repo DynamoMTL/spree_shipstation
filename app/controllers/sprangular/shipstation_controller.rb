@@ -1,7 +1,7 @@
 include SpreeShipstation
 
-module Spree
-  class ShipstationController < Spree::StoreController
+module Sprangular
+  class ShipstationController < Sprangular::BaseController
     include BasicSslAuthentication
     include Spree::DateParamHelper
 
@@ -24,3 +24,4 @@ module Spree
     end
   end
 end
+
