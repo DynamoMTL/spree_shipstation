@@ -2,7 +2,7 @@ include SpreeShipstation
 
 module Sprangular
   class ShipstationController < Sprangular::BaseController
-    include BasicSslAuthentication
+    include Spree::BasicSslAuthentication
     include Spree::DateParamHelper
 
     def export
