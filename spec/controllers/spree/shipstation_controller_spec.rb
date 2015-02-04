@@ -13,7 +13,7 @@ describe Spree::ShipstationController, type: :controller do
       let(:shipments) { double }
 
       before do
-        Spree::Shipment.stub_chain(:exportable, :between).with(Time.new(2013, 12, 31,  8, 0, 0, "+00:00"),
+        Spree::Shipment.stub_chain(:pending, :between).with(Time.new(2013, 12, 31,  8, 0, 0, "+00:00"),
                                                                Time.new(2014,  1, 13, 23, 0, 0, "+00:00"))
                                                          .and_return(shipments)
         shipments.stub_chain(:page, :per).and_return(:some_shipments)
