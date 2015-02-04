@@ -5,31 +5,42 @@ describe Spree::Shipment do
     before do
       @active = []
 
-      create_shipment(updated_at: 1.day.ago, order: create(:order, updated_at: 1.day.ago))
-      create_shipment(updated_at: 1.day.from_now, order: create(:order, updated_at: 1.day.from_now))
-    
-      # Old shipment thats order was recently updated..
-      @active << create_shipment(updated_at: 1.week.ago, order: create(:order, updated_at: Time.now))
+      Timecop.freeze(1.day.ago) do
+        create :shipment
+      end
 
-      @active << create_shipment(updated_at: Time.now)
-      @active << create_shipment(updated_at: Time.now)
+      Timecop.freeze(1.day.from_now) do
+        create :shipment
+      end
+
+      # Old shipment thats order was recently updated..
+      Timecop.freeze 1.week.ago do
+        @shipment = create(:shipment)
+      end
+      @shipment.order = create(:order)
+      @shipment.save
+    
+      @active << @shipment
+
+      @active << create(:shipment)
+      @active << create(:shipment)
     end
 
     subject { Spree::Shipment.between(Time.now-1.hour, Time.now + 1.hours) }
 
-    specify { should have(3).shipment }
+    specify { expect(subject.count).to eq(3) }
 
     specify { should == @active }
   end
 
   context "exportable" do
-    let!(:pending) { create_shipment(state: 'pending') }
-    let!(:ready)   { create_shipment(state: 'ready')   }
-    let!(:shipped) { create_shipment(state: 'shipped') }
+    let!(:pending) { create :shipment, state: 'pending' }
+    let!(:ready)   { create :shipment, state: 'ready'   }
+    let!(:shipped) { create :shipment, state: 'shipped' }
 
     subject { Spree::Shipment.exportable }
 
-    specify { should have(2).shipments }
+    specify { expect(subject.count).to eq(2) }
 
     specify { should include(ready)}
     specify { should include(shipped)}
@@ -38,12 +49,12 @@ describe Spree::Shipment do
   end
 
   context "shipped_email" do
-    let(:shipment) { create_shipment(state: 'ready') }
+    let(:shipment) { create :shipment, state: 'ready' }
 
     context "enabled" do
       it "sends email" do
         Spree::Config.send_shipped_email = true
-        mail_message = mock "Mail::Message"
+        mail_message = double "Mail::Message"
         Spree::ShipmentMailer.should_receive(:shipped_email).with(shipment).and_return mail_message
         mail_message.should_receive :deliver
         shipment.ship!
@@ -56,12 +67,6 @@ describe Spree::Shipment do
         Spree::ShipmentMailer.should_not_receive(:shipped_email)
         shipment.ship!
       end
-    end
-  end
-
-  def create_shipment(options={})
-    FactoryGirl.create(:shipment, options).tap do |shipment|
-      shipment.update_column(:state, options[:state]) if options[:state]
     end
   end
 end

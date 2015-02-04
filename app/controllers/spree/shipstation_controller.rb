@@ -1,12 +1,16 @@
 include SpreeShipstation
 
 module Spree
-  class ShipstationController < Spree::StoreController
+  class ShipstationController < BaseController
     include BasicSslAuthentication
     include Spree::DateParamHelper
+    layout false
+
+    protect_from_forgery except: :shipnotify
 
     def export
-      @shipments = Spree::Shipment.exportable
+      @shipments = Spree::Shipment.order(:id)
+                           .exportable
                            .between(date_param(:start_date),
                                     date_param(:end_date))
                            .page(params[:page])
@@ -14,7 +18,7 @@ module Spree
     end
 
     def shipnotify
-      notice = Spree::ShipmentNotice.new(params)
+      notice = Spree::ShipmentNotice.new(params, request.body.read)
 
       if notice.apply
         render(text: 'success')

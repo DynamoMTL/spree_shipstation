@@ -5,7 +5,8 @@ require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 
 require 'rspec/rails'
 require 'factory_girl'
-require 'ffaker'
+require 'faker'
+require 'timecop'
 FactoryGirl.find_definitions
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -16,6 +17,8 @@ Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 require 'spree/testing_support/factories'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/authorization_helpers'
+require 'spree/testing_support/url_helpers'
+require 'rspec/active_model/mocks'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
@@ -26,7 +29,7 @@ RSpec.configure do |config|
   #
   # visit spree.admin_path
   # current_path.should eql(spree.products_path)
-  # config.include Spree::Core::UrlHelpers
+  config.include Spree::TestingSupport::UrlHelpers
 
   # == Mock Framework
   #
