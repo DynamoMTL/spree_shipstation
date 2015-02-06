@@ -19,7 +19,7 @@ describe Spree::Shipment do
       end
       @shipment.order = create(:order)
       @shipment.save
-    
+
       @active << @shipment
 
       @active << create(:shipment)
@@ -38,7 +38,7 @@ describe Spree::Shipment do
     let!(:ready)   { create :shipment, state: 'ready'   }
     let!(:shipped) { create :shipment, state: 'shipped' }
 
-    subject { Spree::Shipment.exportable }
+    subject { Spree::Shipment.ready }
 
     specify { expect(subject.count).to eq(2) }
 
