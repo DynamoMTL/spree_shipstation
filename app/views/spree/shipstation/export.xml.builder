@@ -21,10 +21,17 @@ def address(xml, order, type)
   }
 end
 
+def error(order, shipment)
+  Rails.logger.info "Order #{order.number} is without a proper shipment for ShipStation."
+  next
+end
+
 xml.instruct!
 xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
   @shipments.each do |shipment|
     order = shipment.order
+
+    error(order) if order.completed_at.nil? || shipment.created_at.nil?
 
     xml.Order {
       xml.OrderID        shipment.id
@@ -41,6 +48,7 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
         xml.CustomField1   "Exchange or Replacement Shipment. Not the first shipment for this order."
       end
       xml.CustomField2   shipment.number
+
 
 =begin
       if order.gift?
