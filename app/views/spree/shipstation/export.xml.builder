@@ -23,7 +23,6 @@ end
 
 def error(order, shipment)
   Rails.logger.info "Order #{order.number} is without a proper shipment for ShipStation."
-  next
 end
 
 xml.instruct!
@@ -31,7 +30,10 @@ xml.Orders(pages: (@shipments.total_count/50.0).ceil) {
   @shipments.each do |shipment|
     order = shipment.order
 
-    error(order) if order.completed_at.nil? || shipment.created_at.nil?
+    if order.completed_at.nil? || shipment.created_at.nil?
+      error(order)
+      next
+    end
 
     xml.Order {
       xml.OrderID        shipment.id
