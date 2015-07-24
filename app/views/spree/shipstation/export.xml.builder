@@ -21,7 +21,7 @@ def address(xml, order, type)
   }
 end
 
-def error(order, shipment)
+def error(order)
   Rails.logger.info "Order #{order.number} is without a proper shipment for ShipStation."
 end
 
